@@ -19,21 +19,14 @@ class Brute:
         if self.length < self.num_symbols + self.num_letters + self.num_numbers:
             raise ValueError("Password length must be greater than or equal to the sum of the requested characters.")
 
-        # generate a list of characters to use in the password
-        char_list = []
-        for i in range(self.num_symbols):
-            char_list.append(random.choice(self.symbols))
-        for i in range(self.num_letters):
-            char_list.append(random.choice(self.letters))
-        for i in range(self.num_numbers):
-            char_list.append(random.choice(self.numbers))
-
+        char_list = [random.choice(self.symbols) for _ in range(self.num_symbols)]
+        char_list.extend(random.choice(self.letters) for _ in range(self.num_letters))
+        char_list.extend(random.choice(self.numbers) for _ in range(self.num_numbers))
         # remove duplicates and pad the list with random characters to reach the desired length
         while len(set(char_list)) < self.length:
             char_list.append(random.choice(string.ascii_letters + string.digits + self.symbols))
         random.shuffle(char_list)
-        password = "".join(char_list)
-        return password
+        return "".join(char_list)
 
     def brute_attack(self, max_attempts=1000000):
         # open the PDF file
@@ -42,7 +35,7 @@ class Brute:
 
             # check if the PDF file is encrypted
             if pdf_reader.isEncrypted:
-                for attempt in range(max_attempts):
+                for _ in range(max_attempts):
                     # generate a password
                     password = self.generate_password()
                     # print(password)
