@@ -42,12 +42,12 @@ def copy():
 #     else:
 #         result_label.config(text="Please select a PDF file first")
 def brute_methode():
-    length = int(pass_length_entry.get())
-    sym = int(symbols_entry.get())
-    lett = int(letter_entry.get())
-    num = int(numbers_entry.get())
     global result
     if file_path:
+        num = int(numbers_entry.get())
+        lett = int(letter_entry.get())
+        sym = int(symbols_entry.get())
+        length = int(pass_length_entry.get())
         brute_force = Brute(path=file_path, length=length, num_symbols=sym, num_letters=lett, num_numbers=num)
         result = brute_force.brute_attack()
         result_label.config(text=f"Your PDF password is : {result}")
